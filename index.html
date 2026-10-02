@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tests ophtalmiques</title>
+<style>
+:root{--bg:#f4f7fa;--fg:#0f1b2a;--mu:#5d6e82;--card:#fff;--bd:#d9e2ec;--ac:#2563eb;--ok:#16794a;--okb:#e0f5ea;--bad:#b3261e;--badb:#fde8e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a111c;--fg:#e8eef6;--mu:#8696ab;--card:#0f1928;--bd:#1e2d42;--ac:#5b9bff;--ok:#5fd08a;--okb:#11301f;--bad:#ff8a80;--badb:#3a1c1a}}
+:root[data-theme="dark"]{--bg:#0a111c;--fg:#e8eef6;--mu:#8696ab;--card:#0f1928;--bd:#1e2d42;--ac:#5b9bff;--ok:#5fd08a;--okb:#11301f;--bad:#ff8a80;--badb:#3a1c1a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;padding:18px max(16px,calc((100% - 960px)/2));border-bottom:1px solid var(--bd)}
+.brand{display:flex;gap:12px;align-items:center}.brand b{display:block;font-size:1.25rem;line-height:1.2}
+.brand small{color:var(--mu);font:600 .75rem ui-monospace,Menlo,monospace;letter-spacing:.08em}
+.tools{display:flex;gap:10px;align-items:center}
+nav{display:flex;gap:2px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px;overflow-x:auto}
+nav button{border:0;background:none;color:var(--mu);font:600 .95rem system-ui,sans-serif;padding:9px 14px;border-radius:9px;cursor:pointer;white-space:nowrap}
+nav button[aria-current=true]{background:var(--fg);color:var(--bg)}
+#th{border:1px solid var(--bd);background:var(--card);color:var(--fg);width:44px;height:44px;border-radius:12px;cursor:pointer;font-size:1.1rem}
+main{max-width:960px;margin:auto;padding:24px 16px 48px}
+h2{font-size:1.15rem;margin:20px 0 12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px 20px}
+.stat b{display:block;font-size:2rem;line-height:1.1}.stat span{color:var(--mu)}
+.list{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin-top:16px}
+.item{display:grid;grid-template-columns:1fr 150px 70px;gap:16px;align-items:center;padding:16px 22px;border-bottom:1px solid var(--bd);width:100%;text-align:left;background:none;border-left:0;border-right:0;border-top:0;color:var(--fg);font:inherit}
+.item:last-child{border-bottom:0}button.item{cursor:pointer}button.item:hover{background:var(--bd)}
+@media(max-width:600px){.item{grid-template-columns:1fr 70px}.item .bar{grid-column:1/3;order:3}}
+.item b{display:block}.sub{color:var(--mu);font:.85rem ui-monospace,Menlo,monospace}
+.num{text-align:right;color:var(--mu)}.num b{color:var(--fg)}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.btn{border:0;background:var(--ac);color:#fff;font:600 .95rem system-ui,sans-serif;padding:11px 18px;border-radius:10px;margin:8px 8px 0 0;cursor:pointer}
+.btn.alt{background:var(--card);color:var(--fg);border:1px solid var(--bd)}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin:10px 0;font:500 1rem system-ui,sans-serif;cursor:pointer}
+.opt.ok{background:var(--okb);border-color:var(--ok)}.opt.bad{background:var(--badb);border-color:var(--bad)}.opt:disabled{cursor:default}
+.fb{margin:12px 0}.meta{color:var(--mu);font-size:.9rem}
+details{margin:10px 0;padding:0 20px}summary{cursor:pointer;padding:15px 0;font-weight:600}
+details ul,.card ul{margin:0 0 14px;padding-left:20px}li{margin:7px 0}
+code{font:600 .9em ui-monospace,Menlo,monospace;background:var(--bd);padding:1px 6px;border-radius:5px}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px 16px;color:var(--mu)}.st b{color:var(--fg);font-size:1.4rem;margin-right:4px}.st.sm{padding:6px 12px;font-size:.9rem;border-radius:10px}
+.chip{background:var(--card);color:var(--mu);border:1px solid var(--bd);border-radius:12px;padding:10px 16px;font:600 .95rem system-ui,sans-serif;cursor:pointer}
+.chip i{font-style:normal;opacity:.7;margin-left:6px}.chip.on{color:var(--ac);border-color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,transparent)}.chip.gold{color:#d99a1e;border-color:#d99a1e88}
+.pick{margin-bottom:14px}.pick summary{padding:4px 0}.pick .r{float:right;font-weight:500;color:var(--mu)}
+.prow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+.badge{background:var(--bd);color:var(--mu);font:700 .8rem ui-monospace,Menlo,monospace;padding:6px 10px;border-radius:8px}
+.mast{margin-bottom:16px}.mh{display:flex;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.card.ex{display:grid;grid-template-columns:1fr 1.25fr;padding:0;overflow:hidden}
+.exl{padding:24px;border-right:1px solid var(--bd);background:color-mix(in srgb,var(--bd) 35%,transparent)}.exl h3{margin:12px 0 6px;font-size:1.3rem}.exr{padding:24px}.exr h2{margin-top:0}
+@media(max-width:760px){.card.ex{grid-template-columns:1fr}.exl{border-right:0;border-bottom:1px solid var(--bd)}}
+.dash{display:block;width:100%;border:1px dashed var(--ac);background:none;color:var(--ac);border-radius:12px;padding:16px;font:600 .95rem/1.4 system-ui,sans-serif;cursor:pointer;margin-bottom:16px}
+.opt.sel{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 12%,transparent)}
+.lab{display:flex;justify-content:space-between;color:var(--mu);font:700 .78rem ui-monospace,Menlo,monospace;letter-spacing:.1em;margin:18px 0 8px}
+textarea{width:100%;min-height:100px;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:12px;padding:12px;font:.95rem ui-monospace,Menlo,monospace;resize:vertical}
+</style></head><body>
+<header><div class="brand"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 35 32H5z" style="color:var(--ac)"/><path d="M2 24 15 21M25 21l13-6" style="color:var(--mu)"/></svg><div><b>Tests ophtalmiques</b><small>MODULES 2 ET 3</small></div></div>
+<div class="tools"><nav id="nav"></nav><button id="th" aria-label="Changer le thème">&#9728;</button></div></header>
+<main id="main"></main>
+<script>
+const M=[
+{id:1,t:"Acuité visuelle",c:"2.1",cours:[
+"Acuité visuelle (AV) : capacité de distinguer des détails fins à une distance donnée.",
+"Limite physiologique : en 1674, Robert Hooke a noté que l'œil distingue au mieux 2 étoiles espacées de 1/60 de degré.",
+"Chaque caractère de la charte est composé de 5 éléments. Échelle Monoyer (France, 1875) : 10/10 est la mesure de base.",
+"20/20 (6/6) : lettre vue à 20 pieds (6 m) par une personne à vision optimale = taille de référence. 20/40 (6/12) : lettres plus grandes. 20/15 (6/4.5) : lettres plus petites.",
+"L'AV mesure l'efficacité visuelle du photon jusqu'au cerveau, en vision centrale. 20/20 ne veut pas dire qu'il n'y a aucune anomalie : ce n'est pas un examen de santé oculaire.",
+"On mesure l'AV de chaque œil au début de chaque examen (exigence légale du dossier). Opticiens : lors d'un ajustement en lentilles cornéennes ou au besoin à la livraison de lunettes.",
+"Exceptions : urgence (rinçage de l'œil) ou manque de coopération. On le note au dossier : UTA (unable to assess).",
+"Chemin de l'information : photon, cornée, pupille, cristallin, vitré, rétine, nerf optique, cerveau.",
+"Emmétropie : la lumière se focalise précisément sur la rétine. Myopie : œil trop puissant ou trop long (lentilles négatives). Hypermétropie : œil manque de puissance ou trop court (lentilles positives). Astigmatisme : forme d'œuf, 2 forces différentes à 90 degrés."]},
+{id:2,t:"Consentement",c:"2.2",cours:[
+"Loi sur le consentement aux soins de santé, 1996. Trois questions : quand il est nécessaire, quels sont ses éléments, qui a la capacité de le donner.",
+"Traitements d'opticiens et d'optométristes : achat de lunettes ou de lentilles cornéennes, ajustement en lentilles cornéennes, instiller des gouttes, manipuler la paupière.",
+"Consentement éclairé : (1) la personne reçoit l'information adéquate pour décider du traitement; (2) elle peut poser des questions et reçoit des réponses.",
+"Consentement implicite ou explicite : deux formes à savoir distinguer.",
+"Enfants : au Québec, 14 ans. Ailleurs, pas d'âge minimum : le professionnel juge selon l'âge, la maturité et le type de traitement.",
+"Incapacité : opticiens et optométristes n'évaluent pas les capacités cognitives. On se fie à nos observations et on peut référer. Quelqu'un peut consentir à un traitement mais pas à un autre.",
+"Une personne peut être désignée pour décider au nom du patient, mais toujours avec l'implication du patient le plus possible.",
+"Hiérarchie (simplifiée) : 1) personne désignée par la cour ou procuration, 2) conjoint, 3) parent ou enfant, 4) frère ou sœur, 5) autre membre de la famille. Cas complexe (garde partagée) : contacter l'ordre professionnel."]},
+{id:3,t:"Autoréfractomètre",c:"3.1",cours:[
+"Mesure objective de la réfraction : une lumière est projetée au fond de l'œil et sur la cornée, elle revient avec une divergence ou convergence, et l'ordinateur calcule la puissance.",
+"S = sphère, C = cylindre, A = axe du cylindre. R1 = rayon de courbure de la cornée en mm. R2 = 2e rayon de courbure (cornée ovale plutôt que sphérique).",
+"Déroulement : image qui simule une distance éloignée, parfois claire, parfois floue (c'est normal, on rassure le patient). But : muscle ciliaire relaxé, aucune accommodation.",
+"0.00 = emmétropie. Négatif = myopie. Positif = hypermétropie. Exemple : OD +1.00 = hypermétropie; OS -2.00 = myopie.",
+"0-1.00x180 : astigmatisme, correction dans un seul méridien : cylindre -1.00, axe 180.",
+"Méridien : mot emprunté à la géographie (ligne de longitude). Axe : direction du cylindre où il n'y a pas de puissance.",
+"Les valeurs sont en cylindre négatif parce que les lentilles ophtalmiques sont taillées avec des cylindres négatifs.",
+"+1.00-1.00x180 : sphère +1.00, cylindre -1.00, axe 180 (astigmatisme corrigé avec 2 puissances).",
+"Accommodation : le cerveau donne le signal selon la distance perçue. Les enfants accommodent beaucoup, donc les résultats ne sont pas toujours fiables. Un œil qui accommode ressemble à un œil myope."]},
+{id:4,t:"Tonométrie",c:"3.2",cours:[
+"Tonométrie : mesure de la pression intraoculaire (PIO), en mmHg.",
+"L'œil a besoin d'une certaine pression pour garder sa forme. Trop de pression peut abîmer les fibres du nerf optique chez une personne sensible : plusieurs facteurs influencent la maladie.",
+"Facteurs qui influencent la mesure : type d'appareil, comportement et placement du patient, épaisseur de la cornée, moment de la journée, qualité des mesures, variabilité entre individus, médicaments systémiques, gouttes stéroïdes, inflammation et autres pathologies.",
+"Premiers tonomètres : on mesure le poids placé sur l'œil qui aplatit la surface. Plus le poids est lourd, plus la pression est élevée. Anesthésie nécessaire.",
+"NCT (non-contact) : un jet d'air aplatit la cornée, la force est convertie en mmHg.",
+"iCare : parfois utilisé en stage externe. Ne touche pas directement l'œil : mini fléchette en mousse qui rebondit sur l'œil."]},
+{id:5,t:"Vision des couleurs",c:"3.3",cours:[
+"Macula = rétine centrale; fovéa = centre de la macula : meilleure acuité et vision des couleurs.",
+"Bâtonnets : vision nocturne et mouvement (sensibles à 495 nm). Cônes : couleurs et acuité centrale.",
+"3 cônes chez la plupart des humains : S (420 nm, bleu), M (530 nm, vert), L (560 nm, rouge).",
+"Oiseaux et reptiles : 4 cônes. La plupart des mammifères : 2 cônes (les chiens par exemple). Poissons : 4 cônes ou aucun selon l'habitat. Primates : 3e cône pour voir les fruits rouges dans le feuillage vert.",
+"Déficience génétique : cône M souvent manquant ou déficient (vert); cône L (rouge). Rouge et vert se contrastent, donc l'un affecte l'autre. Absence du cône S (bleu) très rare.",
+"Protanopie : absence du cône L. Deutéranopie : absence du cône M. Tritanopie : absence du cône S. Les -anomalies sont des déficiences; achromatopsie (aucune couleur) très rare.",
+"Test standard de dépistage : plus de 3 chiffres manqués = déficience. Test D-15 : suite de couleurs similaires, distingue les différentes anomalies.",
+"Trait récessif sur le chromosome X : 8 % des hommes, 0.5 % des femmes.",
+"Maladies de la rétine ou du nerf optique peuvent aussi affecter les couleurs, chaque œil différemment : on mesure les 2 yeux séparément. Pilotes : test répété à chaque visite. Un problème génétique est toujours pareil dans les 2 yeux."]}
+];
+const F=[
+["Notation de la réfraction",["Sphère Cylindre x Axe, par exemple <code>+1.00-1.00x180</code> : sphère +1.00, cylindre -1.00, axe 180.","<code>0-1.00x180</code> : sphère 0, cylindre -1.00, axe 180.","Axe = direction où le cylindre n'a pas de puissance. Cylindre toujours écrit en négatif."]],
+["Interpréter un résultat",["<code>0.00</code> : emmétropie.","Signe <code>-</code> : myopie (lentille négative).","Signe <code>+</code> : hypermétropie (lentille positive).","Cylindre présent : astigmatisme."]],
+["Acuité visuelle",["<code>20/20 = 6/6 = 10/10</code> (Monoyer).","Premier chiffre : distance du test. Deuxième : distance à laquelle un œil normal voit cette taille de lettre.","20 pieds = 6 m. 20/40 : lettres plus grandes; 20/15 : lettres plus petites."]],
+["Cônes",["S : 420 nm (bleu). M : 530 nm (vert). L : 560 nm (rouge). Bâtonnets : 495 nm.","Protanopie = sans L. Deutéranopie = sans M. Tritanopie = sans S."]],
+["Chiffres à retenir",["Consentement des enfants au Québec : 14 ans.","Daltonisme : 8 % des hommes, 0.5 % des femmes.","Test de couleurs : plus de 3 chiffres manqués = déficience.","PIO mesurée en mmHg."]]];
+const Q=[
+[1,"OD 20/40 et OS 20/20. Que veut dire ceci?",["L'OD voit à 20 pieds ce qu'un œil normal voit à 40 pieds; l'OS a la vision de référence","L'OS voit moins bien que l'OD","Les deux yeux sont normaux","L'OD voit mieux que la normale"],0,"20/40 : l'œil voit à 20 pieds ce qu'un œil optimal voit à 40 pieds. 20/20 est la référence."],
+[1,"Comparée à la ligne 20/20, la ligne 20/15 a des lettres...",["plus grandes","plus petites","de la même taille","floues"],1,"20/15 est faite pour être vue à 15 pieds, donc plus rapprochée : lettres plus petites."],
+[1,"Dans l'échelle Monoyer (France, 1875), quelle mesure est la mesure de base?",["20/40","5/10","10/10","6/12"],2,"Avec ce système, 10/10 est la mesure de base (équivalent de 20/20)."],
+[1,"Un œil trop puissant ou trop long est...",["hypermétrope","myope","emmétrope","astigmate"],1,"Myopie : œil trop puissant ou trop long. On réduit la puissance avec des lentilles négatives."],
+[1,"Un patient a 20/20. Est-ce que cela garantit qu'aucune anomalie n'existe?",["Oui, c'est un examen de santé complet","Non, l'AV n'est pas un examen de santé oculaire","Oui, si les deux yeux sont 20/20","Seulement chez les adultes"],1,"20/20 ne veut pas dire qu'aucune anomalie n'existe."],
+[1,"Que note-t-on au dossier quand l'AV est impossible à mesurer (manque de coopération)?",["NPL","UTA","OD/OS","AV 0"],1,"UTA = unable to assess, souvent utilisé dans les dossiers."],
+[1,"Quel œil a une forme d'œuf et se corrige avec 2 forces différentes à 90 degrés?",["Myope","Hypermétrope","Astigmate","Emmétrope"],2,"Astigmatisme : forme d'œuf au lieu de sphère."],
+[2,"Quel est l'âge pour donner son consentement à un traitement au Québec?",["Aucun âge minimum","12 ans","14 ans","18 ans"],2,"Au Québec c'est 14 ans. Ailleurs, pas d'âge minimum."],
+[2,"Un consentement éclairé exige que la personne...",["signe un document","reçoive l'information adéquate et puisse poser des questions","soit majeure","paie d'avance"],1,"Information adéquate pour décider, et possibilité de poser des questions avec réponses."],
+[2,"Lequel est un traitement fait par un opticien ou un optométriste?",["Lire un journal","Instiller des gouttes","Prendre un café","Remplir un formulaire de rendez-vous"],1,"Instiller des gouttes, ajuster des lentilles cornéennes, manipuler la paupière, acheter lunettes ou lentilles."],
+[2,"Qui est premier dans la hiérarchie pour consentir au nom du patient?",["Le conjoint","Un parent","Une personne désignée par la cour ou par procuration","Un frère ou une sœur"],2,"1) désigné par la cour ou procuration, 2) conjoint, 3) parent ou enfant, 4) frère ou sœur, 5) autre famille."],
+[2,"Ontario : comment juge-t-on si un enfant peut consentir?",["Âge fixe de 14 ans","Le professionnel juge selon l'âge, la maturité et le type de traitement","Toujours le parent","Impossible avant 18 ans"],1,"En Ontario et dans les autres provinces, le professionnel détermine l'habileté à consentir."],
+[2,"Les opticiens et optométristes sont-ils responsables de l'évaluation cognitive des patients?",["Oui","Non, on se fie à nos observations et on peut référer","Seulement les opticiens","Seulement pour les enfants"],1,"On n'évalue pas les capacités cognitives; on peut référer à un autre professionnel."],
+[3,"Résultat OD +1.00. Quelle est la réfraction?",["Myopie","Emmétropie","Hypermétropie","Astigmatisme"],2,"Positif = hypermétropie, corrigée avec du positif."],
+[3,"Résultat OS -2.00. Quelle est la réfraction?",["Myopie","Hypermétropie","Emmétropie","Presbytie"],0,"Négatif = myopie."],
+[3,"Que veut dire 0-1.00x180?",["Sphère -1.00 seulement","Cylindre -1.00, axe 180, sphère 0","Axe 1.00, cylindre 180","Emmétropie"],1,"Sphère 0, cylindre -1.00, axe 180 : astigmatisme corrigé dans un seul méridien."],
+[3,"Que désigne le mot axe?",["La direction du cylindre où il n'y a pas de puissance","La puissance maximale","Le rayon de la cornée","La distance pupillaire"],0,"L'axe est la direction du cylindre où il n'y a pas de puissance."],
+[3,"Pourquoi les valeurs de l'autoréfractomètre sont-elles en cylindre négatif?",["C'est plus facile à lire","Les lentilles ophtalmiques sont taillées avec des cylindres négatifs","Les yeux ont toujours un cylindre négatif","C'est une erreur de l'appareil"],1,"Les lentilles ophtalmiques sont taillées avec des cylindres négatifs."],
+[3,"Les résultats de l'autoréfractomètre sont-ils toujours fiables chez les enfants?",["Oui","Non, ils accommodent beaucoup","Oui, s'ils ne bougent pas","Seulement pour le cylindre"],1,"Les enfants ont beaucoup d'accommodation : un œil qui accommode ressemble à un œil myope."],
+[3,"Que représentent R1 et R2?",["Les 2 rayons de courbure de la cornée (mm)","La sphère de chaque œil","Les axes OD et OS","Deux distances pupillaires"],0,"R1 : rayon de courbure de la cornée en mm; R2 : 2e rayon si la cornée est ovale."],
+[4,"Que mesure le tonomètre?",["La pression artérielle de l'œil","La pression intraoculaire","La quantité de liquide dans l'œil","Le risque de glaucome"],1,"La tonométrie est la mesure de la pression intraoculaire."],
+[4,"Que fait le tonomètre NCT?",["Touche l'œil avec un poids","Envoie un jet d'air pour aplatir la cornée","Utilise une fléchette en mousse","Prend une photo de la rétine"],1,"La force du jet d'air est convertie en mmHg."],
+[4,"Comment fonctionne le tonomètre iCare?",["Jet d'air","Poids sur la cornée avec anesthésie","Mini fléchette en mousse qui rebondit sur l'œil","Lumière infrarouge"],2,"iCare ne touche pas directement l'œil : mini fléchette en mousse qui rebondit."],
+[4,"Lequel de ces éléments influence la pression oculaire mesurée?",["La couleur des yeux","L'épaisseur de la cornée","La taille du patient","La couleur de la monture"],1,"Épaisseur de la cornée, temps de la journée, type d'appareil, gouttes stéroïdes, etc."],
+[4,"Une pression élevée signifie-t-elle automatiquement un glaucome?",["Oui, toujours","Non, plusieurs facteurs influencent cette maladie","Oui, chez les adultes","Non, jamais de lien"],1,"Une pression trop élevée peut abîmer le nerf optique chez un individu sensible, mais plusieurs facteurs entrent en jeu."],
+[4,"Pourquoi les premiers tonomètres exigeaient-ils une anesthésie?",["Ils touchaient l'œil avec un poids","Ils envoyaient un jet d'air","Ils utilisaient un laser","Ils chauffaient l'œil"],0,"On mesurait le poids placé sur l'œil qui aplatit la surface."],
+[5,"Quel cône est sensible au rouge (560 nm)?",["S","M","L","Bâtonnet"],2,"S : 420 nm bleu; M : 530 nm vert; L : 560 nm rouge."],
+[5,"Quelle absence de cône cause la deutéranopie?",["Cône L","Cône M","Cône S","Les bâtonnets"],1,"Protanopie : cône L. Deutéranopie : cône M. Tritanopie : cône S."],
+[5,"Les bâtonnets servent surtout à...",["la vision des couleurs","la vision nocturne et le mouvement","l'acuité centrale","la mise au point"],1,"Bâtonnets (495 nm) : nocturne et mouvement. Cônes : couleurs et acuité centrale."],
+[5,"À partir de combien de chiffres manqués au test standard considère-t-on une déficience?",["Plus de 3","1","Plus de 10","Aucun"],0,"Si on manque plus de 3 chiffres, on considère une déficience des couleurs."],
+[5,"Quelle proportion des hommes a une déficience génétique des couleurs?",["0.5 %","2 %","8 %","20 %"],2,"8 % des hommes et 0.5 % des femmes : trait récessif sur le chromosome X."],
+[5,"Pourquoi répète-t-on la vision des couleurs des pilotes à chaque visite?",["C'est une tradition","La perception peut changer avec une maladie oculaire","Les cônes se régénèrent","Le test change chaque année"],1,"Une maladie de la rétine ou du nerf optique peut affecter les couleurs; un problème génétique reste toujours pareil."],
+[5,"Une déficience génétique des couleurs touche...",["un seul œil","les 2 yeux de la même façon","l'œil dominant seulement","un œil au hasard"],1,"Un problème génétique est toujours pareil dans les 2 yeux."]
+];
+
+const KEY="optprog2";
+const C=[
+[1,"Lire une AV",[0,1,2],"Premier chiffre = distance du test; deuxième = distance où un œil normal voit ces lettres. 20/20 = 6/6 = 10/10."],
+[1,"Limites de l'AV",[4,5],"L'AV mesure la vision centrale; 20/20 n'est pas un examen de santé oculaire; on note UTA si impossible."],
+[1,"Types de défauts",[3,6],"Myopie : trop puissant ou long. Hypermétropie : pas assez puissant. Astigmatisme : forme d'œuf."],
+[2,"Âge et maturité",[7,11],"Québec : 14 ans. Ailleurs : le professionnel juge l'âge, la maturité et le type de traitement."],
+[2,"Consentement éclairé",[8,9],"Information adéquate + possibilité de poser des questions. Traitement : gouttes, lentilles, paupière."],
+[2,"Décideur et capacité",[10,12],"On n'évalue pas les capacités cognitives; une hiérarchie désigne qui décide au nom du patient."],
+[3,"Lire un résultat",[13,14,15],"0 = emmétrope, négatif = myope, positif = hypermétrope. Format : sphère, cylindre, axe."],
+[3,"Axe et cylindre",[16,17],"Axe = direction du cylindre sans puissance. Les lentilles ophtalmiques sont taillées en cylindre négatif."],
+[3,"Fiabilité et mesures",[18,19],"Enfants : beaucoup d'accommodation. R1 et R2 : rayons de courbure de la cornée en mm."],
+[4,"Types de tonomètres",[21,22,25],"NCT : jet d'air. iCare : fléchette en mousse. Anciens : poids sur l'œil avec anesthésie."],
+[4,"Interpréter la PIO",[20,23,24],"Mesurée en mmHg. L'épaisseur de la cornée influence. Pression élevée n'est pas toujours un glaucome."],
+[5,"Cônes et bâtonnets",[26,28],"S 420 nm bleu, M 530 nm vert, L 560 nm rouge. Bâtonnets 495 nm : vision nocturne."],
+[5,"Déficiences",[27,30,32],"Protanopie : L. Deutéranopie : M. Tritanopie : S. 8 % des hommes, 0.5 % des femmes. Pareil aux 2 yeux."],
+[5,"Dépistage",[29,31],"Plus de 3 chiffres manqués = déficience. Pilotes testés à chaque visite."]
+];
+let P={q:{},exam:[],best:0,theme:"dark"};
+try{Object.assign(P,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}};
+P.s=P.s||{n:0,f:0,cur:0};P.sess=P.sess||{};P.notes=P.notes||{};
+const main=document.getElementById("main"),nav=document.getElementById("nav");
+const setTheme=()=>{document.documentElement.dataset.theme=P.theme};setTheme();
+document.getElementById("th").onclick=()=>{P.theme=P.theme=="dark"?"light":"dark";setTheme();save()};
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const idx=id=>Q.map((q,i)=>i).filter(i=>!id||Q[i][0]==id);
+const tm=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+let timer=null;
+function ms(id){const a=idx(id),t=a.filter(i=>P.q[i]),s=a.filter(i=>P.q[i]&&P.q[i].ok),f=t.filter(i=>P.q[i].f);
+return{n:a.length,t:t.length,s:s.length,pct:t.length?Math.round(100*f.length/t.length):null}}
+const row=(tag,title,sub,m,attr)=>`<${tag} class="item" ${attr||""}><span><b>${title}</b><span class="sub">${sub}</span></span><div class="bar"><i style="width:${Math.round(100*m.s/m.n)}%"></i></div><span class="num"><b>${m.pct==null?"\u2014":m.pct+" %"}</b><br>${m.s}/${m.n} q.</span></${tag}>`;
+let act=new Set(C.map((c,i)=>i)),disc=false,Z={};
+const pl=()=>document.getElementById("play"),pool=()=>[...new Set([...act].flatMap(i=>C[i][2]))],cOf=q=>C.findIndex(c=>c[2].includes(q));
+function exercices(){clearInterval(timer);main.innerHTML='<div id="hd"></div><div id="play"></div>';
+document.getElementById("hd").onclick=e=>{const b=e.target.closest("button");if(!b)return;const f=b.dataset.f,c=b.dataset.c;
+if(c!==undefined){const i=+c;act.has(i)?act.delete(i):act.add(i);head();nextQ()}
+else if(f=="x")exam();else if(f=="a"){act=new Set(C.map((c,i)=>i));head();nextQ()}
+else if(f=="d"){disc=!disc;head();nextQ()}
+else if(f=="s"){P.sess={};P.s={n:0,f:0,cur:0};save();head();nextQ()}
+else if(f){act=new Set(C.map((c,i)=>i).filter(i=>C[i][0]==+f));head();nextQ()}};
+head();nextQ()}
+function head(){const S=P.s,all=act.size==C.length;
+const mp=Math.round(100*C.filter((c,i)=>c[2].every(q=>P.sess[q])).length/C.length);
+document.getElementById("hd").innerHTML=`<div class="chips"><span class="st"><b>${S.cur}</b>série</span><span class="st"><b>${P.best}</b>record</span><span class="st"><b>${S.n}</b>questions</span><span class="st"><b>${S.n?Math.round(100*S.f/S.n):0}%</b>du 1er coup</span></div>
+<div class="chips"><button class="chip gold" data-f="x">\u2605 Examen <i>15</i></button><button class="chip${all?" on":""}" data-f="a">Tous les modules <i>${Q.length}</i></button>${M.map(m=>{const ids=C.map((c,i)=>i).filter(i=>C[i][0]==m.id),on=act.size==ids.length&&ids.every(i=>act.has(i));return`<button class="chip${on?" on":""}" data-f="${m.id}">Module ${m.c} <i>${idx(m.id).length}</i></button>`}).join("")}<button class="chip${disc?" on":""}" data-f="d">Mode découverte</button><button class="chip on" data-f="s">Session</button></div>
+<details class="card pick" open><summary>Choisir concept par concept <span class="r">${act.size} actif(s) sur ${C.length}</span></summary>${M.map(m=>`<div class="prow"><span class="badge">${m.c}</span>${C.map((c,i)=>c[0]==m.id?`<button class="chip${act.has(i)?" on":""}" data-c="${i}">\u25CF ${c[1]}</button>`:"").join("")}</div>`).join("")}</details>
+<div class="card mast"><div class="mh"><b>Concepts maîtrisés</b><span class="meta">${mp} % \u00B7 réussis du 1er coup cette session</span></div><div class="bar"><i style="width:${mp}%"></i></div><div class="chips" style="margin:14px 0 0">${[...act].map(i=>`<span class="st sm">${C[i][1]} ${C[i][2].filter(q=>P.sess[q]).length}/${C[i][2].length}</span>`).join("")}<button class="chip" data-f="s">Nouvelle session</button></div></div>`}
+function nextQ(){clearInterval(timer);const p=pool();if(!p.length){pl().innerHTML='<div class="card">Choisis au moins un concept.</div>';return}
+const l=p.filter(q=>!P.sess[q]&&q!==Z.q),m=l.length?l:p.filter(q=>q!==Z.q),src=m.length?m:p,q=src[Math.floor(Math.random()*src.length)];
+Z={q,sel:null,tries:0,hint:false,done:false,shown:false,bad:[],ord:sh(Q[q][2].map((_,j)=>j))};drawQ()}
+function drawQ(){const q=Q[Z.q],c=C[cOf(Z.q)],m=M.find(x=>x.id==c[0]),d=c[2].filter(k=>P.sess[k]).length;
+pl().innerHTML=`<div class="card ex"><div class="exl"><span class="badge">${m.c}</span><h3>${c[1]}</h3><div class="meta">${m.t}</div><p class="meta">${d}/${c[2].length} réussis du 1er coup (session)</p></div>
+<div class="exr"><button class="dash" id="hb">${Z.hint?c[3]:"Indice du cahier \u2014 toucher pour révéler"}</button><h2>${q[1]}</h2>
+${Z.ord.map(j=>`<button class="opt" data-k="${j}">${q[2][j]}</button>`).join("")}<div id="fb" class="fb"></div>
+<div class="lab"><span>BROUILLON</span><span>enregistré automatiquement</span></div><textarea id="nt" placeholder="Écris ta démarche ici : ce que tu cherches, ce que tu sais, ta réponse\u2026"></textarea>
+<div><button class="btn" id="vf">Vérifier</button><button class="btn alt" id="sol">Voir la solution</button><button class="btn alt" id="ps">Passer</button></div></div></div>`;
+const nt=document.getElementById("nt");nt.value=P.notes[Z.q]||"";nt.oninput=()=>{P.notes[Z.q]=nt.value;save()};
+document.getElementById("hb").onclick=e=>{Z.hint=true;e.currentTarget.textContent=c[3]};
+const ops=[...pl().querySelectorAll(".opt")];
+ops.forEach(b=>b.onclick=()=>{if(Z.done)return;Z.sel=+b.dataset.k;ops.forEach(x=>x.classList.toggle("sel",x==b))});
+document.getElementById("vf").onclick=()=>{if(Z.done)return;if(Z.sel===null){fb("Choisis une réponse d'abord.");return}attempt(Z.sel)};
+document.getElementById("sol").onclick=()=>{if(Z.done)return;if(!Z.tries&&!Z.shown)count(false);Z.shown=true;reveal()};
+document.getElementById("ps").onclick=nextQ}
+const fb=t=>{document.getElementById("fb").innerHTML=t};
+function count(good){if(disc)return;const k=Z.q,p=P.q[k]||(P.q[k]={a:0,ok:false});p.a++;if(p.f===undefined)p.f=good;
+if(!Z.tries&&!Z.shown){P.s.n++;if(good){P.s.f++;P.s.cur++;P.best=Math.max(P.best,P.s.cur);P.sess[k]=true}else P.s.cur=0}
+if(good)p.ok=true;save()}
+function attempt(j){const good=j==Q[Z.q][3];
+if(disc){Z.shown=true;reveal();return}
+count(good);if(good){reveal()}else{Z.tries++;Z.bad.push(j);const b=pl().querySelector(`.opt[data-k="${j}"]`);b.disabled=true;b.classList.remove("sel");b.classList.add("bad");Z.sel=null;fb("<b>Pas tout à fait.</b> Essaie encore ou clique sur Voir la solution.")}}
+function reveal(){Z.done=true;const q=Q[Z.q];pl().querySelectorAll(".opt").forEach(x=>{x.disabled=true;x.classList.remove("sel");if(+x.dataset.k==q[3])x.classList.add("ok")});
+fb(`<b>Solution :</b> ${q[2][q[3]]}<br>${q[4]}<br><button class="btn" id="nx">Question suivante</button>`);head();document.getElementById("nx").onclick=nextQ}
+function exam(){clearInterval(timer);const list=sh(idx(0)).slice(0,15);let i=0,sc=0,bad=[],left=1200;
+const end=()=>{clearInterval(timer);const p=Math.round(100*sc/list.length);P.exam=P.exam.concat({d:new Date().toLocaleDateString("fr-CA"),p}).slice(-8);save();
+pl().innerHTML=`<div class="card"><h2>Examen : ${sc} / ${list.length} (${p} %)</h2>${bad.length?`<h3>À revoir</h3>${bad.map(k=>`<p><b>${Q[k][1]}</b><br>Bonne réponse : ${Q[k][2][Q[k][3]]}<br><span class="meta">${Q[k][4]}</span></p>`).join("")}`:""}<button class="btn" id="bk">Retour aux exercices</button></div>`;document.getElementById("bk").onclick=nextQ};
+const show=()=>{const k=list[i],q=Q[k],o=sh(q[2].map((_,j)=>j));
+pl().innerHTML=`<div class="card"><p class="meta">Examen \u00B7 question ${i+1} sur ${list.length} \u00B7 <span id="tm">${tm(left)}</span></p><h2>${q[1]}</h2>${o.map(j=>`<button class="opt" data-k="${j}">${q[2][j]}</button>`).join("")}</div>`;
+pl().querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(+b.dataset.k==q[3])sc++;else bad.push(k);i++;i<list.length?show():end()})};
+timer=setInterval(()=>{left--;const t=document.getElementById("tm");if(t)t.textContent=tm(left);if(left<=0){bad.push(...list.slice(i));end()}},1000);show();pl().scrollIntoView({behavior:"smooth"})}
+function formulaire(){main.innerHTML=F.map(f=>`<div class="card" style="margin-bottom:14px"><b>${f[0]}</b><ul>${f[1].map(x=>`<li>${x}</li>`).join("")}</ul></div>`).join("")}
+function cahier(){main.innerHTML=M.map(m=>`<details class="card"><summary>${m.c} ${m.t}</summary><ul>${m.cours.map(x=>`<li>${x}</li>`).join("")}</ul></details>`).join("")}
+function progres(){
+const a=idx(0),t=a.filter(i=>P.q[i]),s=t.filter(i=>P.q[i].ok),f=t.filter(i=>P.q[i].f),att=t.reduce((x,i)=>x+P.q[i].a,0);
+const st=[[s.length,"questions faites"],[(t.length?Math.round(100*f.length/t.length):0)+"%","réussites du 1er coup"],[t.length?(att/t.length).toFixed(1):0,"essais par question"],[P.best,"meilleure série"]];
+const ex=P.exam.length?P.exam.slice().reverse().map(e=>`<div class="item" style="grid-template-columns:1fr auto"><span>${e.d}</span><b>${e.p} %</b></div>`).join(""):`<div class="item" style="grid-template-columns:1fr"><span class="meta">Aucun examen passé.</span></div>`;
+main.innerHTML=`<div class="stats">${st.map(x=>`<div class="card stat"><b>${x[0]}</b><span>${x[1]}</span></div>`).join("")}</div>
+<div class="list">${M.map(m=>row("div",m.c+" "+m.t,m.cours.length+" points au cahier",ms(m.id))).join("")}</div>
+<h2>Examens récents</h2><div class="list" style="margin-top:0">${ex}</div>
+<p class="meta">Sauvegardé dans ce navigateur seulement.</p><button class="btn alt" id="rs">Effacer mes progrès</button>`;
+document.getElementById("rs").onclick=()=>{if(confirm("Effacer tous tes progrès?")){P.q={};P.exam=[];P.best=0;P.sess={};P.s={n:0,f:0,cur:0};P.notes={};save();progres()}}}
+const T={exercices:["Exercices",exercices],formulaire:["Formulaire",formulaire],cahier:["Cahier",cahier],progres:["Progrès",progres]};
+function go(k){clearInterval(timer);nav.querySelectorAll("button").forEach(b=>b.setAttribute("aria-current",b.dataset.k==k));T[k][1]()}
+nav.innerHTML=Object.entries(T).map(([k,v])=>`<button data-k="${k}">${v[0]}</button>`).join("");
+nav.querySelectorAll("button").forEach(b=>b.onclick=()=>go(b.dataset.k));
+go("exercices");
+</script></body></html>
